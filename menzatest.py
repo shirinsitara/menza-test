@@ -26,14 +26,6 @@ DEBUG = False
 if not EMAIL or not PASSWORD:
     raise RuntimeError("Missing MENZA_EMAIL or MENZA_PASSWORD environment variables.")
 
-# BASE_URL = "https://app.menza.ai"
-# EMAIL = "test123@menza.ai"
-# PASSWORD = "menzatest"
-# OUTPUT = "dashboard_titles.json"
-# HEADLESS = False
-# DEBUG = True
-
-
 COMMON_NON_DASHBOARD_TERMS = {
     "dashboard", "dashboards","home", "settings", "billing", "logout", "log out",
     "sign out", "help", "support", "search", "new", "create", "edit", "delete",
