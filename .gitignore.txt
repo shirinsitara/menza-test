@@ -1,0 +1,82 @@
+Last login: Sat Apr  4 09:17:25 on ttys001
+(base) shirinsitara@Shirins-MacBook-Pro ~ % cd Desktop/menza
+(base) shirinsitara@Shirins-MacBook-Pro menza % ls
+dashboard_titles.json	menzatest.py		post_login_page.html
+(base) shirinsitara@Shirins-MacBook-Pro menza % python menzatest.py
+[debug] checking selector: css input[type="email"] count= 0
+[debug] checking selector: css input[name*="email" i] count= 0
+[debug] checking selector: css input[placeholder*="email" i] count= 1
+[debug] matched selector: css input[placeholder*="email" i]
+[debug] checking selector: role_button_exact Continue count= 1
+[debug] matched selector: role_button_exact Continue
+[debug] URL after email continue: https://app.menza.ai/sign-in/factor-one?redirect_url=https%3A%2F%2Fapp.menza.ai%2F
+[debug] checking selector: role_button_exact Use another method count= 0
+[debug] checking selector: text Use another method count= 1
+[debug] matched selector: text Use another method
+[debug] checking selector: role_button_exact Use another method count= 0
+[debug] checking selector: text Use another method count= 1
+[debug] matched selector: text Use another method
+[debug] checking selector: role_button_exact Sign in with your password count= 1
+[debug] matched selector: role_button_exact Sign in with your password
+[debug] checking selector: role_button_exact Sign in with your password count= 1
+[debug] matched selector: role_button_exact Sign in with your password
+[debug] checking selector: css input[type="password"] count= 1
+[debug] matched selector: css input[type="password"]
+[debug] checking selector: role_button_exact Continue count= 1
+[debug] matched selector: role_button_exact Continue
+[debug] Final sign-in URL: https://app.menza.ai/org_2zN0b4RICaCFmXUtai6oidlsirM/home
+[debug] checking selector: role_link_exact Dashboards count= 1
+[debug] matched selector: role_link_exact Dashboards
+[debug] checking selector: role_button_exact All count= 0
+[debug] checking selector: role_button_exact View all count= 0
+[debug] checking selector: role_button_exact Show more count= 0
+[debug] scanning selector: main h1 count= 0
+[debug] scanning selector: main h2 count= 0
+[debug] scanning selector: main h3 count= 0
+[debug] scanning selector: [role="main"] h1 count= 0
+[debug] scanning selector: [role="main"] h2 count= 0
+[debug] scanning selector: [role="main"] h3 count= 0
+[debug] scanning selector: a[href*="dashboard"] count= 9
+[debug] scanning selector: [data-testid*="dashboard" i] count= 0
+[debug] scanning selector: [class*="dashboard" i] count= 0
+{
+  "last_updated_epoch": 1775290886,
+  "count": 7,
+  "dashboard_titles": [
+    "Dashboard1",
+    "Dashboard2",
+    "Dashboard3",
+    "Dashboard4",
+    "Silly Goosie",
+    "this is a test 1234",
+    "Untitled Dashboard"
+  ]
+}
+(base) shirinsitara@Shirins-MacBook-Pro menza % ls
+dashboard_titles.json	menzatest.py
+(base) shirinsitara@Shirins-MacBook-Pro menza % nano .gitignore
+
+  UW PICO 5.09                    File: .gitignore                    Modified  
+
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Output files
+dashboard_titles.json
+*.log
+*.jsonl
+post_login_page.html
+
+# OS/editor files
+.DS_Store
+.vscode/
+.idea/
+
+
+
+^G Get Help  ^O WriteOut  ^R Read File ^Y Prev Pg   ^K Cut Text  ^C Cur Pos   
+^X Exit      ^J Justify   ^W Where is  ^V Next Pg   ^U UnCut Text^T To Spell  
