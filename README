@@ -5,4 +5,15 @@ Instructions:
 2. Run: "source .venv/bin/activate && python menzatest.py"
 3. Setup regular updates via a cronejob: "bash cronjob_setup.sh"
 
+# Tradeoffs
+
+- UI selectors can still break if the authentication flow changes significantly
+- Network inspection improves resilience, but depends on dashboard data being exposed in JSON responses
+- The script favors robustness and readability over minimalism
+
+# Conversation with AI
+1. Reviewing Playwright script structure
+2. Creating setup.sh and conjob_setup.sh
+2. Checking submission completeness
+
 
