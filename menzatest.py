@@ -5,13 +5,15 @@ import re
 import sys
 import os
 import time
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from typing import Any, Iterable
 from dotenv import load_dotenv
+from datetime import datetime
 
 from playwright.sync_api import Page, Response, TimeoutError, sync_playwright
 
-load_dotenv()
+from pathlib import Path
+load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 
 BASE_URL = os.getenv("BASE_URL", "https://app.menza.ai")
 EMAIL = os.getenv("MENZA_EMAIL")
@@ -418,7 +420,7 @@ def clean_dashboard_card_text(value: str) -> str:
 
 def save_results(titles: list[str]) -> None:
     payload = {
-        "last_updated_epoch": int(time.time()),
+        "last_updated_epoch": datetime.now().astimezone().isoformat(),
         "count": len(titles),
         "dashboard_titles": titles,
     }
@@ -451,7 +453,7 @@ def main() -> int:
             save_results(titles)
 
             print(json.dumps({
-                "last_updated_epoch": int(time.time()),
+                "last_updated_epoch": datetime.now().astimezone().isoformat(),
                 "count": len(titles),
                 "dashboard_titles": titles,
             }, indent=2, ensure_ascii=False))
