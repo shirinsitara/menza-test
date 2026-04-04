@@ -48,4 +48,4 @@ fi
 echo ""
 echo "✅ Setup complete!"
 echo "👉 Run your script with:"
-echo "source .venv/bin/activate && python menzatest.py"
+echo "To run the program enter: source .venv/bin/activate && python menzatest.py"

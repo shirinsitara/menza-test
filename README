@@ -1,0 +1,8 @@
+Instructions:
+
+# Terminal instructions
+1. Setup: "bash setup.sh"
+2. Run: "source .venv/bin/activate && python menzatest.py"
+3. Setup regular updates via a cronejob: "bash cronjob_setup.sh"
+
+
