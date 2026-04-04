@@ -1,43 +1,47 @@
 #!/usr/bin/env bash
-
-set -e
+set -euo pipefail
 
 echo "Setting up Menza project..."
 
-PYTHON_CMD="python3"
-if ! command -v "$PYTHON_CMD" >/dev/null 2>&1; then
+# Find a usable Python
+PYTHON_CMD=""
+if command -v python3 >/dev/null 2>&1; then
+  PYTHON_CMD="python3"
+elif command -v python >/dev/null 2>&1; then
   PYTHON_CMD="python"
-fi
-
-if ! command -v "$PYTHON_CMD" >/dev/null 2>&1; then
-  echo "Error: Python is required but was not found."
+elif command -v py >/dev/null 2>&1; then
+  PYTHON_CMD="py"
+else
+  echo "Error: Python was not found. Install Python 3.10+ and try again."
   exit 1
 fi
 
+echo "Using Python command: $PYTHON_CMD"
+
+# Create venv if missing
 if [ ! -d ".venv" ]; then
   echo "Creating virtual environment..."
-  "$PYTHON_CMD" -m venv .venv
+  if [ "$PYTHON_CMD" = "py" ]; then
+    py -3 -m venv .venv
+  else
+    "$PYTHON_CMD" -m venv .venv
+  fi
 fi
 
-OS="$(uname -s 2>/dev/null || echo Windows)"
-
-if [ -f ".venv/bin/activate" ]; then
-  VENV_ACTIVATE=".venv/bin/activate"
+# Locate venv python without using activate
+if [ -x ".venv/bin/python" ]; then
   VENV_PYTHON=".venv/bin/python"
-elif [ -f ".venv/Scripts/activate" ]; then
-  VENV_ACTIVATE=".venv/Scripts/activate"
+elif [ -x ".venv/Scripts/python.exe" ]; then
   VENV_PYTHON=".venv/Scripts/python.exe"
-elif [ -f ".venv/Scripts/activate.bat" ]; then
-  VENV_ACTIVATE=".venv/Scripts/activate.bat"
-  VENV_PYTHON=".venv/Scripts/python.exe"
+elif [ -x ".venv/Scripts/python" ]; then
+  VENV_PYTHON=".venv/Scripts/python"
 else
-  echo "Error: Could not find virtual environment activation script."
+  echo "Error: Could not find the virtual environment Python executable."
+  echo "Try deleting .venv and running this script again."
   exit 1
 fi
 
-echo "Activating virtual environment..."
-# shellcheck disable=SC1090
-source "$VENV_ACTIVATE" 2>/dev/null || true
+echo "Virtual environment python: $VENV_PYTHON"
 
 echo "Upgrading pip..."
 "$VENV_PYTHON" -m pip install --upgrade pip
@@ -50,7 +54,7 @@ echo "Installing Playwright browsers..."
 
 if [ ! -f ".env" ]; then
   echo "Creating .env file..."
-  cat <<EOF > .env
+  cat > .env <<'EOF'
 BASE_URL=https://app.menza.ai
 MENZA_EMAIL=test123@menza.ai
 MENZA_PASSWORD=menzatest
@@ -62,4 +66,4 @@ fi
 echo ""
 echo "Setup complete."
 echo "Run the script with:"
-echo "\"$VENV_PYTHON\" menzatest.py"
+echo "$VENV_PYTHON menzatest.py"
