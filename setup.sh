@@ -2,40 +2,54 @@
 
 set -e
 
-echo "🔧 Setting up Menza project..."
+echo "Setting up Menza project..."
 
-# Detect python
 PYTHON_CMD="python3"
-if ! command -v $PYTHON_CMD &> /dev/null; then
-  echo "❌ Python3 is required but not installed."
+if ! command -v "$PYTHON_CMD" >/dev/null 2>&1; then
+  PYTHON_CMD="python"
+fi
+
+if ! command -v "$PYTHON_CMD" >/dev/null 2>&1; then
+  echo "Error: Python is required but was not found."
   exit 1
 fi
 
-# Create venv if not exists
 if [ ! -d ".venv" ]; then
-  echo "📦 Creating virtual environment..."
-  $PYTHON_CMD -m venv .venv
+  echo "Creating virtual environment..."
+  "$PYTHON_CMD" -m venv .venv
 fi
 
-# Activate venv
-echo "⚡ Activating virtual environment..."
-source .venv/bin/activate
+OS="$(uname -s 2>/dev/null || echo Windows)"
 
-# Upgrade pip
-echo "⬆️ Upgrading pip..."
-pip install --upgrade pip
+if [ -f ".venv/bin/activate" ]; then
+  VENV_ACTIVATE=".venv/bin/activate"
+  VENV_PYTHON=".venv/bin/python"
+elif [ -f ".venv/Scripts/activate" ]; then
+  VENV_ACTIVATE=".venv/Scripts/activate"
+  VENV_PYTHON=".venv/Scripts/python.exe"
+elif [ -f ".venv/Scripts/activate.bat" ]; then
+  VENV_ACTIVATE=".venv/Scripts/activate.bat"
+  VENV_PYTHON=".venv/Scripts/python.exe"
+else
+  echo "Error: Could not find virtual environment activation script."
+  exit 1
+fi
 
-# Install dependencies
-echo "📚 Installing dependencies..."
-pip install playwright python-dotenv
+echo "Activating virtual environment..."
+# shellcheck disable=SC1090
+source "$VENV_ACTIVATE" 2>/dev/null || true
 
-# Install Playwright browsers
-echo "🌐 Installing Playwright browsers..."
-playwright install
+echo "Upgrading pip..."
+"$VENV_PYTHON" -m pip install --upgrade pip
 
-# Create .env if it doesn't exist
+echo "Installing dependencies..."
+"$VENV_PYTHON" -m pip install playwright python-dotenv
+
+echo "Installing Playwright browsers..."
+"$VENV_PYTHON" -m playwright install
+
 if [ ! -f ".env" ]; then
-  echo "📝 Creating .env file..."
+  echo "Creating .env file..."
   cat <<EOF > .env
 BASE_URL=https://app.menza.ai
 MENZA_EMAIL=test123@menza.ai
@@ -46,6 +60,6 @@ EOF
 fi
 
 echo ""
-echo "✅ Setup complete!"
-echo "👉 Run your script with:"
-echo "To run the program enter: source .venv/bin/activate && python menzatest.py"
+echo "Setup complete."
+echo "Run the script with:"
+echo "\"$VENV_PYTHON\" menzatest.py"
