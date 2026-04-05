@@ -61,7 +61,7 @@ def build_cron_command() -> str:
 
 def cron_schedule() -> str:
     if INTERVAL_MINUTES == 60:
-        return "*/2 * * * *"
+        return "0 * * * *"
     return f"*/{INTERVAL_MINUTES} * * * *"
 
 
