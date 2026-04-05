@@ -34,7 +34,7 @@ Overlapping runs are prevented automatically (`flock` on Mac/Linux, `MultipleIns
 - Network inspection improves resilience, but depends on dashboard data being exposed in JSON responses
 - The script favors robustness and readability over minimalism
 - `HEADLESS` is always forced to `true` in the `.env` to ensure compatibility with scheduled/headless environments
-- For ease of test run, values of email and password are hardcoded into the '.env' file during setup.
+- For ease of test run, values of email and password are hardcoded into the `.env` file during setup.
 
 ---
 

@@ -65,9 +65,15 @@ def create_venv(python_cmd: str) -> None:
 
 
 def install_dependencies() -> None:
+    VENV_PLAYWRIGHT = (
+        os.path.join(VENV_DIR, "Scripts", "playwright.exe")
+        if IS_WINDOWS
+        else os.path.join(VENV_DIR, "bin", "playwright")
+    )
+
     run([VENV_PYTHON, "-m", "pip", "install", "--upgrade", "pip"])
     run([VENV_PYTHON, "-m", "pip", "install", "playwright", "python-dotenv"])
-    run([VENV_PYTHON, "-m", "playwright", "install", "chromium"])
+    run([VENV_PLAYWRIGHT, "install", "chromium"])
 
 
 def write_env_file() -> None:
